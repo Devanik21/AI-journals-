@@ -1,4 +1,7 @@
 streamlit
 google-generativeai
-textblob
 matplotlib
+textblob
+pandas
+wordcloud
+base64
