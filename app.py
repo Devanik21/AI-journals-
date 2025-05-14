@@ -1,19 +1,23 @@
 import streamlit as st
 import datetime
 import matplotlib.pyplot as plt
-import os
 import google.generativeai as genai
 from textblob import TextBlob
-
-# Configure Gemini API
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-
-model = genai.GenerativeModel("gemini-pro")
 
 # App title
 st.set_page_config(page_title="Daily AI Journal", layout="centered")
 st.title("📝 Daily Personalized AI Journal")
 st.markdown("Write your journal and get a thoughtful reply from your AI coach, mentor, or friend.")
+
+# Gemini API Key Input
+api_key = st.text_input("Enter your Gemini API Key", type="password")
+if not api_key:
+    st.warning("Please enter your Gemini API key to continue.")
+    st.stop()
+
+# Configure Gemini API
+genai.configure(api_key=api_key)
+model = genai.GenerativeModel("gemini-2.0-flash")
 
 # Mode selection
 mode = st.selectbox("Choose AI Role:", ["Coach", "Mentor", "Friend"])
