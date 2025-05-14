@@ -19,6 +19,20 @@ if not api_key:
 genai.configure(api_key=api_key)
 model = genai.GenerativeModel("gemini-2.0-flash")
 
+# Prompt builder function
+def build_prompt(entry, mode):
+    mode_instructions = {
+        "Coach": "Reply like a motivational coach. Give positive reinforcement, practical tips, and encourage action.",
+        "Mentor": "Reply like a wise mentor. Provide insightful reflections, thought-provoking questions, and guidance.",
+        "Friend": "Reply like a supportive best friend. Be kind, empathetic, and emotionally engaging.",
+    }
+    return f"""You are a {mode.lower()} AI. A user has shared their personal journal entry for today. Your job is to respond supportively and reflectively in a tone matching the role of a {mode.lower()}.
+
+    Journal Entry:
+    {entry}
+
+    Your Response:"""
+
 # Mode selection
 mode = st.selectbox("Choose AI Role:", ["Coach", "Mentor", "Friend"])
 
@@ -63,16 +77,3 @@ if st.session_state.history:
     ax.set_xlabel("Date")
     ax.set_title("Mood Trend")
     st.pyplot(fig)
-
-def build_prompt(entry, mode):
-    mode_instructions = {
-        "Coach": "Reply like a motivational coach. Give positive reinforcement, practical tips, and encourage action.",
-        "Mentor": "Reply like a wise mentor. Provide insightful reflections, thought-provoking questions, and guidance.",
-        "Friend": "Reply like a supportive best friend. Be kind, empathetic, and emotionally engaging.",
-    }
-    return f"""You are a {mode.lower()} AI. A user has shared their personal journal entry for today. Your job is to respond supportively and reflectively in a tone matching the role of a {mode.lower()}.
-
-    Journal Entry:
-    {entry}
-
-    Your Response:"""
