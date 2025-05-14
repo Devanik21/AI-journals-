@@ -330,23 +330,23 @@ def navigation():
     
     if cols[0].button("📝 Journal", use_container_width=True):
         st.session_state.current_page = "journal"
-        rerun()
+        st.experimental_rerun()
     
     if cols[1].button("📊 Analytics", use_container_width=True):
         st.session_state.current_page = "analytics"
-        rerun()
+        st.experimental_rerun()
         
     if cols[2].button("🎯 Goals", use_container_width=True):
         st.session_state.current_page = "goals"
-        rerun()
+        st.experimental_rerun()
     
     if cols[3].button("⚙️ Settings", use_container_width=True):
         st.session_state.current_page = "settings"
-        rerun()
+        st.experimental_rerun()
         
     if cols[4].button("❓ Help", use_container_width=True):
         st.session_state.current_page = "help"
-        rerun()
+        st.experimental_rerun()
     
     st.markdown("<hr>", unsafe_allow_html=True)
 
@@ -369,7 +369,7 @@ def login_page():
                 st.success(f"Welcome, {user_name}! Your new journal is ready.")
                 
             st.session_state.current_page = "journal"
-            rerun()
+            st.experimental_rerun()
         else:
             st.error("Please enter your name to continue.")
 
@@ -665,7 +665,7 @@ def goals_page():
                 st.session_state.goals.append(new_goal)
                 save_data_to_file()
                 st.success("Goal added successfully!")
-                rerun()
+                st.experimental_rerun()
             else:
                 st.error("Please enter a goal description.")
     
@@ -690,14 +690,14 @@ def goals_page():
                     st.session_state.goals[goal["id"]]["completed"] = True
                     save_data_to_file()
                     st.success("Goal marked as complete!")
-                    rerun()
+                    st.experimental_rerun()
             
             with col3:
                 if st.button(f"🔍 Reflect", key=f"reflect_{i}"):
                     # Add reflection functionality here
                     st.session_state.current_goal_id = goal["id"]
                     st.session_state.current_page = "goal_reflection"
-                    rerun()
+                    st.experimental_rerun()
         
         st.markdown("<hr>", unsafe_allow_html=True)
     
@@ -719,7 +719,7 @@ def goal_reflection_page():
     if not goal:
         st.error("Goal not found.")
         st.session_state.current_page = "goals"
-        rerun()
+        st.experimental_rerun()
         return
     
     st.markdown(f'<div class="main-header">🔍 Goal Reflection</div>', unsafe_allow_html=True)
@@ -746,7 +746,7 @@ def goal_reflection_page():
     
     if st.button("Back to Goals"):
         st.session_state.current_page = "goals"
-        rerun()
+        st.experimental_rerun()
     
     # Show previous reflections
     if "reflections" in goal and goal["reflections"]:
@@ -805,7 +805,7 @@ def settings_page():
                     del st.session_state.custom_prompts[name]
                     save_data_to_file()
                     st.success(f"Prompt '{name}' deleted!")
-                    rerun()
+                    st.experimental_rerun()
     
     # Reminders
     st.markdown('<div class="subheader">Journal Reminders</div>', unsafe_allow_html=True)
@@ -865,7 +865,7 @@ def settings_page():
                 
                 save_data_to_file()
                 st.success("All data has been cleared.")
-                rerun()
+                st.experimental_rerun()
 
 # Help Page
 def help_page():
