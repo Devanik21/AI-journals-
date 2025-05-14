@@ -33,6 +33,19 @@ def build_prompt(entry, mode):
 
     Your Response:"""
 
+# Mood analyzer
+def get_mood(sentiment):
+    if sentiment <= -0.5:
+        return "😡 Angry"
+    elif sentiment <= -0.2:
+        return "😟 Negative"
+    elif sentiment >= 0.5:
+        return "😁 Very Positive"
+    elif sentiment >= 0.2:
+        return "😊 Positive"
+    else:
+        return "😐 Neutral"
+
 # Mode selection
 mode = st.selectbox("Choose AI Role:", ["Coach", "Mentor", "Friend"])
 
@@ -48,7 +61,7 @@ if st.button("Reflect with AI"):
         prompt = build_prompt(entry, mode)
         response = model.generate_content(prompt)
         sentiment = TextBlob(entry).sentiment.polarity
-        mood = "😊 Positive" if sentiment > 0.2 else "😐 Neutral" if sentiment >= -0.2 else "😟 Negative"
+        mood = get_mood(sentiment)
 
         # Store session
         st.session_state.history.append({
@@ -71,9 +84,15 @@ if st.session_state.history:
     scores = [h["sentiment"] for h in st.session_state.history]
 
     fig, ax = plt.subplots()
-    ax.plot(dates, scores, marker='o', linestyle='-')
+    ax.plot(dates, scores, marker='o', linestyle='-', color='purple')
     ax.axhline(0, color='gray', linestyle='--')
     ax.set_ylabel("Sentiment Score")
     ax.set_xlabel("Date")
     ax.set_title("Mood Trend")
+    plt.xticks(rotation=45)
     st.pyplot(fig)
+
+    # Optional: Show last 3 journal responses
+    st.markdown("## 🕰️ Recent Reflections")
+    for h in st.session_state.history[-3:][::-1]:
+        st.markdown(f"**{h['date']}** — *{get_mood(h['sentiment'])}*\n\n**Entry:** {h['entry']}\n\n**AI Response:** {h['response']}")
