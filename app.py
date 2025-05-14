@@ -35,7 +35,7 @@ except LookupError:
     nltk.download('stopwords')
 
 # App title and configuration
-st.set_page_config(page_title="Daily AI Journal", layout="wide")
+st.set_page_config(page_title="Daily AI Journal", layout="wide",page_icon=" 📓")
 
 # Initialize session state variables
 if "history" not in st.session_state:
