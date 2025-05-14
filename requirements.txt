@@ -1,7 +1,11 @@
 streamlit
-google-generativeai
 matplotlib
+google-generativeai
 textblob
 pandas
 wordcloud
-
+nltk
+plotly
+pillow
+numpy
+pytz
