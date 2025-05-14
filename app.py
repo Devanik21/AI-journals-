@@ -24,11 +24,14 @@ import time
 import hashlib
 
 # Download necessary NLTK data
+# Download necessary NLTK data
 try:
     nltk.data.find('tokenizers/punkt')
+    nltk.data.find('tokenizers/punkt_tab')  # Added this check
     nltk.data.find('corpora/stopwords')
 except LookupError:
     nltk.download('punkt')
+    nltk.download('punkt_tab')  # Added this download
     nltk.download('stopwords')
 
 # App title and configuration
