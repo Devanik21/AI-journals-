@@ -17,7 +17,7 @@ if not api_key:
 
 # Configure Gemini API
 genai.configure(api_key=api_key)
-model = genai.GenerativeModel("gemini-2.5-flash-preview-04-17")
+model = genai.GenerativeModel("gemini-2.0-flash")
 
 # Prompt builder function
 def build_prompt(entry, mode):
